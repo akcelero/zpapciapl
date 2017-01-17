@@ -3,7 +3,19 @@
 ?>	
 	<center class="menu">
 	<div class="wrapper">
-	<a class="menuLink before after sixth" href="workers.php">Aktualizuj bambosze pracowników!</a>
+	<a class="menuLink before after sixth" href="clients.php">Aktualizuj bambosze klientów!</a>
+	</div>
+	<br />
+	<div class="wrapper">
+	<a class="menuLink before after sixth" href="places.php">Edytuj papcioland.</a><br />
+	</div>
+	<br />
+	<div class="wrapper">
+	<a class="menuLink before after sixth" href="visits.php">Wizyty? Jakie wizyty?</a>
+	</div>
+	<hr />
+	<div class="wrapper">
+	<a class="menuLink before after sixth" href="workers.php">Zarządzaj władcami bamboszy.</a><br />
 	</div>
 	<br />
 	<div class="wrapper">

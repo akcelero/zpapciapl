@@ -1,8 +1,10 @@
 	</div>
 	<div id="foot">
-		<hr />
 		<center>
-		Created by Kamil Grzybek & Piotr Jaroszewski
+		<hr />
+		Created by Kamil Grzybek & Piotr Jaroszewski<br />
+		Project on w
+		<a href="https://github.com/akcelero/zpapciapl">github</a>
 		</center>
 	</div>
 </div>

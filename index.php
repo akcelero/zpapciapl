@@ -20,6 +20,9 @@
 		// header("wLocation: http://www.domena.pl/");
 	}
 ?>
+	<center>
+	By ubrać papcioszki, musisz się zalogować !<br /><br />
+	</center>
 	<form method="POST">
 		<div style="width:800px;">
 			<div style="width:390px; float:left; text-align:right; padding-right:5px;">
