@@ -1,0 +1,23 @@
+div{
+	/* border: 1px solid black; */
+}
+#header{
+	text-align:center;
+	padding-bottom: 10px;
+	border-bottom:2px solid gray;
+}
+
+#all{
+	right:50%;
+	margin-left:400px;
+	padding: 20px 0 20px 0;
+	width:800px;
+}
+#content{
+	text-align:top;
+	padding-top:20px;
+}
+
+#foot{
+	margin-top:50px;
+}
