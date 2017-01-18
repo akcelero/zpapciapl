@@ -2,7 +2,7 @@
 
 import random, string
 
-names = ['ania', 'Wojtek', 'Andrzej', 'Michal', 'mateusz', 'Ewa', 'Jacek', 'Piotr', 'Kamil', 'Aleksander', 'Kasia', 'Monika', 'Marta']
+names = ['Ania', 'Wojtek', 'Andrzej', 'Michal', 'Mateusz', 'Ewa', 'Jacek', 'Piotr', 'Kamil', 'Aleksander', 'Kasia', 'Monika', 'Marta']
 surnames = ['Pachla', 'Wróbel', 'Dudek', 'Sikora', 'Zięba', 'Woźniak', 'Krawczyk', 'Szewczyk', 'Swat', 'Kaczmarek', 'Wdowiak', 'Cieślak']
 
 for i in range(1,20):

@@ -8,7 +8,7 @@
 
 	<center>
 	<a href="index.php">
-	<img id="logo" src="logo.jpg" width="750px"/>
+	<img id="logo" src="logo2.jpg" width="750px"/>
 	</a>
 	<br />
 	<div id="barMenu">
