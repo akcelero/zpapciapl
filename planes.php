@@ -7,8 +7,9 @@
 		$destination = $_POST['destination'];
 		$price = $_POST['price'];
 		$numberOfPlaces = $_POST['numberOfPlaces'];
+		$block = isset($_POST['block'])?1:0;
 		if(isset($_POST['edit'])){
-			$con->query("update flights set numberOfPlaces='$numberOfPlaces', price='$price', destination='$destination'  where id=$id;");
+			$con->query("update flights set block='$block', numberOfPlaces='$numberOfPlaces', price='$price', destination='$destination'  where id=$id;");
 		} else if(isset($_POST['remove'])){
 			$con->query("delete from flights where id = '$id';");
 		} else if(isset($_POST['add']) && isset($_POST['price']) && isset($_POST['numberOfPlaces']) && isset($_POST['destination'])){
@@ -42,6 +43,7 @@
 			$destination = $row['destination'];
 			$price = $row['price'];
 			$date = $row['date'];
+			$block = $row['block'];
 			$numberOfPlaces = $row['numberOfPlaces'];
 			echo("
 				<tr>	
@@ -55,6 +57,8 @@
 					<input type='text' class='price' name='price' value='$price' />
 					</td><td>
 					<input type='text' class='numberOfPlaces' name='numberOfPlaces' value='$numberOfPlaces' />
+					</td><td>
+					<input type='checkbox' size='1' name='block' ".($block==1?"checked":"")." size='1'/>
 					</td><td>
 					<input type='submit' class='edit' name='edit' value='Edytuj' />
 					<input type='submit' onclick='return confirm(\"Aby na pewno chcesz usunąć $name?\")' class='remove' name='remove' value='Usuń' />
@@ -74,6 +78,7 @@
 			<input type='text' class='price' name='price' />
 			</td><td>
 			<input type='text' class='numberOfPlaces' name='numberOfPlaces' />
+			</td><td>
 			</td><td>
 			<input type='submit' class='edit' name='add' value='Dodaj Bambosza!' />
 			</td>

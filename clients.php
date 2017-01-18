@@ -51,7 +51,7 @@
 					</td><td>
 					<input type='text' class='name' name='name' value='$name' />
 					</td><td>
-					<input type='text' class='birth' name='birth' value='$birth' />
+					<input size='10' type='text' class='birth' name='birth' value='$birth' />
 					</td><td>
 					<input type='text' class='address' name='address' value='$address' />
 					</td><td>
@@ -70,7 +70,7 @@
 			<input type='hidden' name='option' value='add' />
 			<input type='text' class='name' name='name' />
 			</td><td>
-			<input type='text' class='birth' name='birth' />
+			<input type='text' size='10' class='birth' name='birth' />
 			</td><td>
 			<input type='text' class='address' name='address' />
 			</td><td>

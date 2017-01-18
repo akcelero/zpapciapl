@@ -22,16 +22,18 @@ mariadb_connection = mariadb.connect(user='root', password='root', database='zpa
 cursor = mariadb_connection.cursor()
 cursor.execute("drop table if exists hotels;");
 q = "create table hotels(\
-		`id` int(2) auto_increment,\
-		`address` varchar(20),\
-		`numberOfPlaces` int(4),\
-		`pricePerNight` int(4),\
+		`id` int(2) auto_increment not null,\
+		`address` varchar(20) not null,\
+		`numberOfPlaces` int(4) not null,\
+		`pricePerNight` int(4) not null,\
+                `block` int(1) default 0,\
+                `stars` varchar(6) not null,\
 		PRIMARY KEY(id)\
 	);";
 cursor.execute(q);
 for i in range(1, len(places) + 10):
-    q = ("insert into hotels(address, numberOfPlaces, pricePerNight) values('{}', '{}', '{}');".format(
-                random.choice(places), random.randint(1,5) * 10, random.randint(3, 10) * 10
+    q = ("insert into hotels(address, numberOfPlaces, pricePerNight, stars) values('{}', '{}', '{}', '{}');".format(
+                random.choice(places), random.randint(1,5) * 10, random.randint(3, 10) * 10, "*"*random.randint(1,5)
                 ))
     cursor.execute(q)
 mariadb_connection.commit()

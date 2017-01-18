@@ -3,6 +3,9 @@ body {
 	padding:0px;
 	margin:0px;
 }
+* {
+	font-size: 0.99em;
+}
 div {
 	/* border: 1px solid black; */
 }
@@ -35,7 +38,7 @@ div {
 #foot {
 	color:gray;
 	font-size:10px;
-	margin-top:50px;
+	margin-top:10px;
 	margin-bottom:10px;
 }
 
@@ -87,4 +90,13 @@ a:active  {
 	width: 800px;
 }
 
+input[type="submit"], input[type="submit"], select
+{
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
 
+input[type="submit"]:hover,input[type="text"]:hover, select:hover {
+    background-color: #008CBA; /* Green */
+    color: white;
+}

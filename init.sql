@@ -25,36 +25,6 @@ insert into places(address, opddeningHours) values
 	("Dubojsowa 39", "8:00-15:30"),
 	("Armandzka 2a", "7:30-16:00");
 
-create table visits(
-		`id` int(10) auto_increment,
-		`idClient` int(10),
-		`idPlace` int(10),
-		`data` date,
-		PRIMARY KEY(id)
-		);
-
-insert into visits(idClient, idPlace, data) values('4', '2', '1991-08-18');
-insert into visits(idClient, idPlace, data) values('4', '2', '1991-08-11');
-insert into visits(idClient, idPlace, data) values('4', '3', '1991-03-29');
-insert into visits(idClient, idPlace, data) values('2', '2', '1991-05-30');
-insert into visits(idClient, idPlace, data) values('3', '2', '1997-03-25');
-insert into visits(idClient, idPlace, data) values('2', '1', '2000-02-05');
-insert into visits(idClient, idPlace, data) values('4', '2', '1997-10-04');
-insert into visits(idClient, idPlace, data) values('4', '3', '1994-02-08');
-insert into visits(idClient, idPlace, data) values('4', '2', '1999-02-19');
-insert into visits(idClient, idPlace, data) values('3', '1', '1993-02-23');
-insert into visits(idClient, idPlace, data) values('4', '2', '1995-06-29');
-insert into visits(idClient, idPlace, data) values('3', '3', '1996-03-12');
-insert into visits(idClient, idPlace, data) values('3', '1', '2000-05-08');
-insert into visits(idClient, idPlace, data) values('1', '2', '1996-02-11');
-insert into visits(idClient, idPlace, data) values('4', '1', '1996-10-11');
-insert into visits(idClient, idPlace, data) values('3', '2', '1993-07-07');
-insert into visits(idClient, idPlace, data) values('3', '2', '1995-01-24');
-insert into visits(idClient, idPlace, data) values('1', '3', '1996-10-26');
-insert into visits(idClient, idPlace, data) values('1', '1', '1993-09-08');
-insert into visits(idClient, idPlace, data) values('3', '2', '1991-07-15');
-
-
 create table flights(
 		`id` int(3) auto_increment,
 		`price` int(5),

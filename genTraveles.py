@@ -11,6 +11,7 @@ q = "create table travels(\
 		`id` int(4) auto_increment,\
 		`idClient` int(4),\
 		`idWorker` int(4),\
+                `idPlace` int(4),\
 		`idFlight` int(4),\
 		`idHotel` int(4),\
 		`dateOfSale` date,\
@@ -34,6 +35,11 @@ idWorkers = []
 for i in cursor:
     idWorkers.append(i[0])
 
+cursor.execute("Select id from places;")
+idPlacess = []
+for i in cursor:
+    idPlacess.append(i[0])
+
 cursor.execute("Select id from flights;")
 idFlights = []
 for i in cursor:
@@ -47,10 +53,11 @@ for i in cursor:
 for i in range(1,5000):
     year = random.randint(2000,2017)
     msc = random.randint(1,11)
-    q = ("insert into travels(idClient, idWorker, idFlight, idHotel, dateOfSale, price,discount, dayStart, dayEnd)\
-values('{}', '{}', '{}', '{}', '{}-{:02d}-{:02}', '{}', '{}', '{}-{:02d}-{:02}', '{}-{:02}-{:02}');".format(\
+    q = ("insert into travels(idClient, idWorker, idPlace, idFlight, idHotel, dateOfSale, price,discount, dayStart, dayEnd)\
+values('{}', '{}', '{}', '{}', '{}', '{}-{:02d}-{:02}', '{}', '{}', '{}-{:02d}-{:02}', '{}-{:02}-{:02}');".format(\
     random.choice(idClients),
     random.choice(idWorkers),
+    random.choice(idPlaces),
     random.choice(idFlights),
     random.choice(idHotels),
     year, msc, random.randint(1,15),
