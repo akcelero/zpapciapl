@@ -6,8 +6,9 @@
 		$id = $_POST['id'];
 		$numberOfPlaces = $_POST['numberOfPlaces'];
 		$adr = $_POST['address'];
+		$pricePerNight = $_POST['pricePerNight'];
 		if(isset($_POST['edit'])){
-			$con->query("update hotels set numberOfPlaces='$numberOfPlaces' where id=$id;");
+			$con->query("update hotels set pricePerNight='$pricePerNight', numberOfPlaces='$numberOfPlaces' where id=$id;");
 		} else if(isset($_POST['remove'])){
 			$con->query("delete from hotels where id = '$id';");
 		} else if(isset($_POST['add']) && isset($_POST['numberOfPlaces']) && isset($_POST['address'])){
@@ -32,12 +33,15 @@
 				</td><td>
 				Ilość miejsc
 				</td><td>
+				Cena za noc
+				</td><td>
 				Akcje
 				</td></tr>");
 		while($row = $result->fetch_assoc()){
-			$id=$row['id'];
-			$numberOfPlaces=$row['numberOfPlaces'];
-			$address=$row['address'];
+			$id = $row['id'];
+			$numberOfPlaces = $row['numberOfPlaces'];
+			$address = $row['address'];
+			$price = $row['pricePerNight'];
 			echo("
 				<tr>	
 				<form method='POST'>
@@ -48,6 +52,8 @@
 					$address
 					</td><td>
 					<input type='text' class='birth' name='numberOfPlaces' value='$numberOfPlaces' />
+					</td><td>
+					<input type='text' class='price' name='pricePerNight' value='$price' />
 					</td><td>
 					<input type='submit' class='edit' name='edit' value='Edytuj' />
 					<input type='submit' onclick='return confirm(\"Aby na pewno chcesz usunąć $name?\")' class='remove' name='remove' value='Usuń' />
@@ -64,6 +70,8 @@
 			<input type='text' class='address' name='address' />
 			</td><td>
 			<input type='text' class='numberOfPlaces' name='numberOfPlaces' />
+			</td><td>
+			<input type='text' class='price' name='price' />
 			</td><td>
 			<input type='submit' class='edit' name='add' value='Dodaj Bambosza!' />
 			</td>

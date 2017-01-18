@@ -2,46 +2,54 @@
 	require_once("baseConnect.php");
 	require_once("jpgraph-4.0.2/src/jpgraph.php");
 	require_once("jpgraph-4.0.2/src/jpgraph_bar.php");
+	$months = array('styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesien','pazdziernik','listopad','grudzien');
 	
-	$data1y=array(47,80,40,116);
-
-
 	// Create the graph. These two calls are always required
-	$graph = new Graph(350,200,'auto');
+	$graph = new Graph(600,400,'auto');
 	$graph->SetScale("textlin");
 	
 	$theme_class=new UniversalTheme;
 	$graph->SetTheme($theme_class);
 	
-	$graph->yaxis->SetTickPositions(array(0,30,60,90,120,150), array(15,45,75,105,135));
+	$graph->yaxis->SetTickPositions(array(0,2,4,6,8,10,12,14), array(1,3,5,7,9,11,13));
 	$graph->SetBox(false);
 	
 	$graph->ygrid->SetFill(false);
-	$graph->xaxis->SetTickLabels(array('A','B','C','D'));
+
+	$id = $_GET['id'];
+	$year = $_GET['y'];
+	$result = $con -> query("
+			select Month(date) as month, count(*) as visits
+			from visits where idPlace = '$id' and Year(date)='$year'
+			group by Month(date)
+		;");
+	
+	$values = array();
+	$labels = array();
+	while($row = $result -> fetch_assoc()){
+		$values[] = $row['visits'];
+		$labels[] = $months[$row['month']-1];
+	}
+
+	$graph->xaxis->SetTickLabels($labels);
+	$graph->xaxis->SetLabelAngle(50);
+	
 	$graph->yaxis->HideLine(false);
 	$graph->yaxis->HideTicks(false,false);
 	
 	// Create the bar plots
-	$b1plot = new BarPlot($data1y);
-	$b2plot = new BarPlot($data1y);
-	$b3plot = new BarPlot($data1y);
+	$plot = new BarPlot($values);
 	
 	// Create the grouped bar plot
-	$gbplot = new GroupBarPlot(array($b1plot));
+	$gbplot = new GroupBarPlot(array($plot));
 	// ...and add it to the graPH
 	$graph->Add($gbplot);
-	
 
-	$b1plot->SetColor("white");
-	$b1plot->SetFillColor("#cc1111");
-	
-	$b2plot->SetColor("white");
-	$b2plot->SetFillColor("#11cccc");
-	
-	$b3plot->SetColor("white");
-	$b3plot->SetFillColor("#1111cc");
+	$plot->SetColor("white");
+	$plot->SetFillColor("#333399");
 	
 	$graph->title->Set("Odwiedziny w roku ".$_GET['y']);
+	$graph->SetFrame(true,'black',2);
 
 	// Display the graph
 	$graph->Stroke();

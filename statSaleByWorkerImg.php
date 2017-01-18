@@ -4,9 +4,6 @@
 	require_once("jpgraph-4.0.2/src/jpgraph_bar.php");
 	$months = array('styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesien','pazdziernik','listopad','grudzien');
 	
-
-
-
 	// Create the graph. These two calls are always required
 	$graph = new Graph(600,400,'auto');
 	$graph->SetScale("textlin");
@@ -19,7 +16,6 @@
 	
 	$graph->ygrid->SetFill(false);
 
-
 	$id = $_GET['id'];
 	$year = $_GET['y'];
 	$result = $con -> query("
@@ -31,17 +27,12 @@
 	$labels = array();
 	while($row = $result -> fetch_assoc()){
 		$values[] = $row['sale'];
-		$labels[] = $months[$row['month']];
+		$labels[] = $months[$row['month']-1];
 	}
 
-
-	// $data1y=array(1,3,4,5,6);
-	// $graph->xaxis->SetTickLabels(array('A','B','C','D'));
 	$graph->xaxis->SetTickLabels($labels);
 	$graph->xaxis->SetLabelAngle(50);
 	
-
-
 	$graph->yaxis->HideLine(false);
 	$graph->yaxis->HideTicks(false,false);
 	
@@ -52,14 +43,11 @@
 	$gbplot = new GroupBarPlot(array($plot));
 	// ...and add it to the graPH
 	$graph->Add($gbplot);
-	
 
 	$plot->SetColor("white");
 	$plot->SetFillColor("#333399");
 	
-	
-	
-	$graph->title->Set("Odwiedziny w roku ".$_GET['y']);
+	$graph->title->Set("Sprzedaż w roku ".$_GET['y']);
 	$graph->SetFrame(true,'black',2);
 
 	// Display the graph

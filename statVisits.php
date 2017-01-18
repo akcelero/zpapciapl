@@ -5,18 +5,29 @@
 	echo("<center>");
 	echo("<h2>Wybierz kapcia do wykresu</h2>");
 	echo("<form method='get'>
-			<select name='id' onchange='this.form.submit()'>");
+		Placówka <select name='id' onchange='this.form.submit()'>");
 	while($row = $result -> fetch_assoc()){
 		echo("<option value='".$row['id']."' >".$row['address']."</option>");
 	}
 	echo("</select>");
 	echo("<br />");
-	echo("Rok <input size='4' type='text' name='year' />");
+	echo("Rok ");
+	echo("<select name='year' onchange='this.form.submit()'>");
+	echo("<option value='0' selected>-----</option>");
+	for($i=2000;$i<2017;$i++){
+		echo("<option value='$i'");
+		if($_GET['year'] == $i){
+			echo("selected");
+		}
+		echo(">$i</option>");
+	}
+	echo("</select>");
+	echo("<br />");
 	echo("</form>");
-	if(isset($_GET['id']) && isset($_GET['year'])){
+	if(isset($_GET['id']) && isset($_GET['year']) && $_GET['year']>0){
 		$id = $_GET['id'];
 		$year = $_GET['year'];
-		echo("<img src='statVisitsImg.php?id=$id&y=$year />");
+		echo("<img src='statVisitsImg.php?id=$id&y=$year' />");
 	}
 	echo("<center>");
 	require_once("footer.php");

@@ -104,18 +104,21 @@
 		clients inner join visits on idClient=clients.id
 		join places on idPlace=places.id
 		where ".$condition." order by data;");
-
-		echo("<table id='visits'>");
-		echo("<tr><td>l.p.</td><td>data</td><td>Imię i nazwisko</td><td>adres</td>");
-		while($row = $result->fetch_assoc()){
-			$id = $row['id'];
-			$data = $row['data'];
-			$name = $row['name'];
-			$adr = $row['address'];
-			echo("<tr><td>$id</td><td>$data</td><td>$name</td><td>$adr</td></tr>");
-			
+		if($result -> num_rows > 0){
+			echo("<table id='visits'>");
+			echo("<tr><td>l.p.</td><td>data</td><td>Imię i nazwisko</td><td>adres</td>");
+			while($row = $result->fetch_assoc()){
+				$id = $row['id'];
+				$data = $row['data'];
+				$name = $row['name'];
+				$adr = $row['address'];
+				echo("<tr><td>$id</td><td>$data</td><td>$name</td><td>$adr</td></tr>");
+				
+			}
+			echo("</table>");
+		} else {
+			echo("<h3>Brak wizit!<br />Nie ładnie!");
 		}
-		echo("</table>");
 	}
 
 

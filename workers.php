@@ -2,7 +2,7 @@
 	include_once('header.php');
 	include_once('baseConnect.php');
 
-	if(isset($_POST['id']) || isset($_POST['add'])){
+	if((isset($_POST['id']) && $_POST['id']>-1) || isset($_POST['add'])){
 		$id = $_POST['id'];
 		$name = $_POST['name'];
 		$birth = $_POST['birth'];
@@ -19,6 +19,7 @@
 			$con->query("update workIn set idPlace='$idPlace', agreement='$agreement', salary='$salary', position='$position' where idWorker='$id';");
 		} else if(isset($_POST['remove'])){
 			$con->query("delete from workers where id = '$id';");
+			header("Location: workers.php"); 
 		} else if(isset($_POST['add']) && isset($_POST['name']) && isset($_POST['birth']) && isset($_POST['address'])){
 			$con->query("insert into workers(name, address, dateOfBirth) values('$name', '$adr', '$birth');");
 		}
@@ -29,11 +30,12 @@
 
 	echo("<center>");
 
-	if(!isset($_GET['id'])){
+	if(!isset($_GET['id']) || $_GET['id']<0){
 		echo("<form metho='GET'>
 			Wybierz bamboszka:
 			<select onchange='this.form.submit()' name='id'>	
 			");
+		echo("<option value='-1' selected>-----</option>");
 			while($row = $result->fetch_assoc()){
 				echo("<option value='".$row['id']."' ");
 				echo(">".$row['name']."</option>");

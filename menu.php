@@ -25,6 +25,10 @@
 	<div class="wrapper">
 	<a class="menuLink before after sixth" href="hotels.php">Zarządzaj hotelami.</a>
 	</div>
+	<br />
+	<div class="wrapper">
+	<a class="menuLink before after sixth" href="addTravel.php">-->>Dodaj wycieczke. <<--</a>
+	</div>
 	</br>
 	<div class="wrapper">
 	<a class="menuLink before after sixth" href="planes.php">Latający dywan.</a><br />
