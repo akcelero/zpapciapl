@@ -18,7 +18,9 @@
 		}
 	}
 
-	$showForm = 1;
+	$busyDay = 0;
+	$busyStartFlight = 0;
+	$busyEndFlight = 0;
 	echo("<center>");
 	if($id < 0){
 		$showForm = 0;
@@ -47,9 +49,40 @@
 		");
 	} elseif(isset($_POST['idWorker']) && isset($_POST['idFlight']) && isset($_POST['idHotel'])) {
 		$showForm = 0;
-		print_r($_POST);
+		$begin = new DateTime( $_GET['dayStart'] );
+		$end   = new DateTime( $_GET['dayEnd'] );
+		$idHotel = $_GET['idHotel'];
+		$idFlight = $_GET['idFlight'];
+
+		for($i = $begin; $begin <= $end; $i->modify('+1 day')){
+    			$d = $i->format("Y-m-d");
+			$result = $con->query("select count(*)>(select numberOfPlaces from hotels where id = '$idHotel') as busy
+				from travels where idHotel = '$idHotel' and dayStart <= '$d' and '$d' < dayEnd;");
+			$row = $result->fetch_assoc();
+			if($row['busy'] == "1"){
+				$busyDay = 1;
+			}
+		}
+
+		$result = $con->query("select count(*)>=(select numberOfPlaces from flights where id = 1) as busy
+			from travels where idFlight = 1 and dayStart = '$begin';");
+		
+		$row = $result->fetch_assoc();
+		if($row['busy'] == "1"){
+			$busyStartFlight = 1;
+		}
+		$result = $con->query("select count(*)>=(select numberOfPlaces from flights where id = 1) as busy
+			from travels where idFlight = 1 and dayEnd = '$begin';");
+		
+		$row = $result->fetch_assoc();
+		if($row['busy'] == "1"){
+			$busyEndFlight = 1;
+		}
+		if($busyDay != 1 && $busyStartFlight != 1 && $busyEndFlight != 1){
+			echo("wszystko ok");
+		}
 	}
-	if($showForm == 1){
+	if($busyDay == 1 || $busyStartFlight == 1 || $busyEndFlight == 1){
 		$result = $con -> query("select id, name from workers;");
 		echo("<form method='POST'>");
 		echo("ID to: ".$id."<br />");
