@@ -29,9 +29,17 @@
 	<div class="wrapper">
 	<a class="menuLink before after sixth" href="planes.php">Latający dywan.</a><br />
 	</div>
-	<hr />
+	<br />
 	<div class="wrapper">
 	<a class="menuLink before after sixth" href="travels.php">W papciach przez świat!.</a><br />
+	</div>
+	<hr />
+	<div class="wrapper">
+	<a class="menuLink before after sixth" href="statVisits.php">Pokaż statystyki wizyt.</a><br />
+	</div>
+	<br />
+	<div class="wrapper">
+	<a class="menuLink before after sixth" href="statSaleByWorker.php">Szprawdz bamboszków!</a><br />
 	</div>
 	</center>
 

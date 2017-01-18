@@ -44,19 +44,20 @@ idHotels = []
 for i in cursor:
     idHotels.append(i[0])
 
-for i in range(1,100):
-    msc = random.randint(1,10)
+for i in range(1,5000):
+    year = random.randint(2000,2017)
+    msc = random.randint(1,11)
     q = ("insert into travels(idClient, idWorker, idFlight, idHotel, dateOfSale, price,discount, dayStart, dayEnd)\
 values('{}', '{}', '{}', '{}', '{}-{:02d}-{:02}', '{}', '{}', '{}-{:02d}-{:02}', '{}-{:02}-{:02}');".format(\
     random.choice(idClients),
     random.choice(idWorkers),
     random.choice(idFlights),
     random.choice(idHotels),
-    '2017', msc, random.randint(1,15),
+    year, msc, random.randint(1,15),
     random.randint(10,40)*100,
     0,
-    '2017', msc+1, random.randint(1,15),
-    '2017', msc+1, random.randint(15,28) 
+    year, msc+1, random.randint(1,15),
+    year, msc+1, random.randint(15,28) 
     ));
     cursor.execute(q);
 

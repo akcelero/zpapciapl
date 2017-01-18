@@ -206,17 +206,3 @@ insert into flights(price, date, destination, numberOfPlaces) values('1200', '20
 insert into flights(price, date, destination, numberOfPlaces) values('150', '2017-07-14', 'Chorwacja Zagrzeb', '45');
 insert into flights(price, date, destination, numberOfPlaces) values('150', '2017-04-11', 'Bośnia i Hercegowina Sarajewo', '60');
 insert into flights(price, date, destination, numberOfPlaces) values('900', '2016-12-13', 'Albania Tirana', '30');
-
-create table travels(
-		`id` int(4),
-		`idClient` int(4),
-		`idWorker` int(4),
-		`idFlight` int(4),
-		`idHotel` int(4),
-		`dateOfSale` date,
-		`price` int(6),
-		`discount` int(6),
-		`dayStart` date,
-		`dayEnd` date,
-		PRIMARY KEY(id)
-	);
