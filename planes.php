@@ -36,6 +36,8 @@
 				</td><td>
 				Ilość miejsc
 				</td><td>
+				Ban
+				</td><td>
 				Akcje
 				</td></tr>");
 		while($row = $result->fetch_assoc()){

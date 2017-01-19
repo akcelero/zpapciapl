@@ -2,6 +2,7 @@
 	include_once('header.php');
 	include_once('baseConnect.php');
 	$id = -1;
+	print_r($_POST);
 	if(isset($_POST['addClient'])){
 		$name = $_POST['name'];
 		$birth = $_POST['birth'];
@@ -48,20 +49,25 @@
 			</form>
 		");
 	} elseif(isset($_POST['idWorker']) && isset($_POST['idFlight']) && isset($_POST['idHotel'])) {
+echo("wtf ".$busyDay.$busyStartFlight.$busyEndFlight."<br />");
 		$showForm = 0;
 		$begin = new DateTime( $_GET['dayStart'] );
 		$end   = new DateTime( $_GET['dayEnd'] );
 		$idHotel = $_GET['idHotel'];
 		$idFlight = $_GET['idFlight'];
 
-		for($i = $begin; $begin <= $end; $i->modify('+1 day')){
-    			$d = $i->format("Y-m-d");
+		$d = new DateTime($begin."");
+		$endDate = new DateTime($end."");
+
+		while ($d <= $end) {
+			
 			$result = $con->query("select count(*)>(select numberOfPlaces from hotels where id = '$idHotel') as busy
 				from travels where idHotel = '$idHotel' and dayStart <= '$d' and '$d' < dayEnd;");
 			$row = $result->fetch_assoc();
 			if($row['busy'] == "1"){
 				$busyDay = 1;
 			}
+			$startDate->add(new DateInterval('P1D'));
 		}
 
 		$result = $con->query("select count(*)>=(select numberOfPlaces from flights where id = 1) as busy
@@ -82,13 +88,12 @@
 			echo("wszystko ok");
 		}
 	}
-	if($busyDay == 1 || $busyStartFlight == 1 || $busyEndFlight == 1){
+	if($id > 0 || $busyDay == 1 || $busyStartFlight == 1 || $busyEndFlight == 1){
 		$result = $con -> query("select id, name from workers;");
 		echo("<form method='POST'>");
 		echo("ID to: ".$id."<br />");
 		echo("<input type='hidden' name='idClient' value='$id' />");
-		echo("<form metho='GET'>
-			Wybierz bamboszka:
+		echo("Wybierz bamboszka:
 			<select name='idWorker'>	
 			");
 		echo("<option value='-1' selected>-----</option>");

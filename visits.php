@@ -1,7 +1,6 @@
 <?php
 	include_once('header.php');
 	include_once('baseConnect.php');
-
 	echo("<center>");
 	echo("<h1>Szukaj Bamboszy</h1>");
 	if(isset($_POST['add'])){
@@ -24,9 +23,7 @@
 	while($row = $clients->fetch_assoc()){
 		$id = $row['id'];
 		$name = $row['name'];
-		echo("
-			<option value='$id'
-			");
+		echo("<option value='$id'");
 		if($_POST['id'] === $id && isset($_POST['byClient'])){
 			echo(" selected ");
 		}
@@ -100,21 +97,25 @@
 	}
 	
 	if(isset($condition)){
-		$result = $con -> query("select visits.id, data, name, places.address from
+		$result = $con -> query("select visits.id, date, name, places.address from
 		clients inner join visits on idClient=clients.id
 		join places on idPlace=places.id
-		where ".$condition." order by data;");
+		where ".$condition." order by date;");
 		if($result -> num_rows > 0){
 			echo("<table id='visits'>");
+			echo("<thead>");
 			echo("<tr><td>l.p.</td><td>data</td><td>Imię i nazwisko</td><td>adres</td>");
+			echo("</thead>");
+			echo("<tbody>");
 			while($row = $result->fetch_assoc()){
 				$id = $row['id'];
-				$data = $row['data'];
+				$date = $row['date'];
 				$name = $row['name'];
 				$adr = $row['address'];
-				echo("<tr><td>$id</td><td>$data</td><td>$name</td><td>$adr</td></tr>");
+				echo("<tr><td>$id</td><td>$date</td><td>$name</td><td>$adr</td></tr>");
 				
 			}
+			echo("</tbody>");
 			echo("</table>");
 		} else {
 			echo("<h3>Brak wizit!<br />Nie ładnie!");

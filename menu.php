@@ -19,7 +19,7 @@
 	</div>
 	<br />
 	<div class="wrapper">
-	<a class="menuLink before after sixth" href="traveles.php">Przejdz do wycieczek.</a>
+	<a class="menuLink before after sixth" href="travels.php">Przejdz do wycieczek.</a>
 	</div>
 	<br />
 	<div class="wrapper">

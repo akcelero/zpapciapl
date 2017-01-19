@@ -24,7 +24,6 @@ cursor.execute("drop table if exists hotels;");
 q = "create table hotels(\
 		`id` int(2) auto_increment not null,\
 		`address` varchar(20) not null,\
-		`numberOfPlaces` int(4) not null,\
 		`pricePerNight` int(4) not null,\
                 `block` int(1) default 0,\
                 `stars` varchar(6) not null,\
@@ -32,8 +31,8 @@ q = "create table hotels(\
 	);";
 cursor.execute(q);
 for i in range(1, len(places) + 10):
-    q = ("insert into hotels(address, numberOfPlaces, pricePerNight, stars) values('{}', '{}', '{}', '{}');".format(
-                random.choice(places), random.randint(1,5) * 10, random.randint(3, 10) * 10, "*"*random.randint(1,5)
+    q = ("insert into hotels(address, pricePerNight, stars) values('{}', '{}', '{}', '{}');".format(
+                random.choice(places), random.randint(3, 10) * 10, "*"*random.randint(1,5)
                 ))
     cursor.execute(q)
 mariadb_connection.commit()

@@ -14,6 +14,7 @@ q = "create table workIn(\
 		`agreement` date,\
 		`salary` float,\
 		`position` varchar(100),\
+                `active` int(1) default 1,\
 		PRIMARY KEY(idWorker)\
 	);"
 cursor.execute(q)

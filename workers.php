@@ -2,6 +2,21 @@
 	include_once('header.php');
 	include_once('baseConnect.php');
 
+	if($_POST['type']=="add"){
+		$con->query("insert into workers(name, dateOfBirth, address) values(
+			'".$_POST['name']."', '".$_POST['birth']."', '".$_POST['address']."');");
+		$result = $con->query("select id from workers where name='".$_POST['name']."' and dateOfBirth='".$_POST['birth']."' and address='".$_POST['address']."';");
+		$row = $con->fetch_assoc();
+		$id = $row[0];
+		echo($id);
+		$con->query("insert into workIn(idWorker, idPlace, agreement, salary, position) values(
+			'".$id."',
+			".$_POST['idPlace'].",
+			".$_POST['agreement'].",
+			".$_POST['salary'].",
+			".$_POST['position'].");");
+	}
+
 	if((isset($_POST['id']) && $_POST['id']>-1) || isset($_POST['add'])){
 		$id = $_POST['id'];
 		$name = $_POST['name'];
@@ -31,8 +46,8 @@
 	echo("<center>");
 
 	if(!isset($_GET['id']) || $_GET['id']<0){
-		echo("<form metho='GET'>
-			Wybierz bamboszka:
+		echo("<form method='GET'>
+			<h3>Wybierz bamboszka:</h3>
 			<select onchange='this.form.submit()' name='id'>	
 			");
 		echo("<option value='-1' selected>-----</option>");
@@ -40,8 +55,37 @@
 				echo("<option value='".$row['id']."' ");
 				echo(">".$row['name']."</option>");
 			}
-			echo("</select>");
-			echo("</form>");
+		echo("</select>");
+		echo("</form>");
+		echo("<input type='hidden' name='type' value='add' />");
+		echo("<form method='POST'>");
+		echo("<h3>Lub utwórz:</h3>");
+		echo("Imie Nazwisko <input type='text' name='name' /><br />");
+		echo("Data urodzenia <input type='date' name='birth' /><br />");
+		echo("Posada <input type='text' name='position' /><br />");
+		$result = $con -> query("select id, name from workers;");
+		echo("Szef: <select name='idBoss'>");
+		echo("<option value='-1' selected>-----</option>");
+		while($row = $result->fetch_assoc()){
+			echo("<option value='".$row['id']."' ");
+			echo(">".$row['name']."</option>");
+		}
+		echo("</select><br />");
+		echo("Adres <input type='text' name='address' /><br />");
+		echo("Pensja <input type='text' name='salary' /><br />");
+		echo("Data umowy <input type='date' name='agreement' /><br />");
+		$result = $con -> query("select id, address from places;");
+		echo("Placówka <select name='idPlace'>");
+		echo("<option value='-1' selected>-----</option>");
+		while($row = $result->fetch_assoc()){
+			echo("<option value='".$row['id']."' ");
+			echo(">".$row['address']."</option><br />");
+		}
+		echo("</select><br />");
+		echo("<input type='submit' value='stwórz' />");
+
+		echo("</form>");
+
 	} else {
 		$result = $con -> query("select * from workers;");
 		$options = "";
@@ -138,7 +182,7 @@
 			echo(">".$op[1]."</option>");
 		}
 		echo("</select></td></tr>
-				<tr><td><input type='submit' name='edit' value='wyślij!' /></td>
+				<tr><td><input type='submit' name='edit' value='edytuj!' /></td>
 				<td><input type='submit' name='remove' value='usuń!' /></td></tr>");
 
 		echo("");
