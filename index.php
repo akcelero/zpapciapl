@@ -1,5 +1,5 @@
 <?php
-	include_once("header.php");
+	session_start();
 	include_once("baseConnect.php");
 	if(isset($_POST['login']) && isset($_POST['password'])){
 		$login = $_POST['login'];
@@ -15,10 +15,10 @@
 	if(isset($_SESSION['level'])){
 		// przekierowanie na adres loklany 
 		header("Location: menu.php"); 
-
 		// przekierowanie na adres zdalny 
 		// header("wLocation: http://www.domena.pl/");
 	}
+	require_once("header.php");
 ?>
 	<center>
 	By ubrać papcioszki, musisz się zalogować !<br /><br />

@@ -32,7 +32,7 @@ q = "create table workers(\
 	);"
 cursor.execute(q)
 
-for i in range(1,20):
+for i in range(1,30):
     q = ("insert into workers(name, dateOfBirth, address) values ('{} {}', '{}-{:02d}-{:02d}', '{}');".format(
                     random.choice(names),
                     random.choice(surnames),
@@ -40,7 +40,7 @@ for i in range(1,20):
                     random.choice(streets)+' '+str(random.randint(1,50))+random.choice(string.ascii_letters)
                 ));
     cursor.execute(q)
-for i in range(1,10):
+for i in range(1,50):
     q = ("insert into clients(name, dateOfBirth, address) values ('{} {}', '{}-{:02d}-{:02d}', '{}');".format(
                     random.choice(names),
                     random.choice(surnames),

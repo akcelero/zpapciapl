@@ -36,9 +36,9 @@ for i in cursor:
     idWorkers.append(i[0])
 
 cursor.execute("Select id from places;")
-idPlacess = []
+idPlaces = []
 for i in cursor:
-    idPlacess.append(i[0])
+    idPlaces.append(i[0])
 
 cursor.execute("Select id from flights;")
 idFlights = []
@@ -50,7 +50,7 @@ idHotels = []
 for i in cursor:
     idHotels.append(i[0])
 
-for i in range(1,5000):
+for i in range(1,300):
     year = random.randint(2000,2017)
     msc = random.randint(1,11)
     q = ("insert into travels(idClient, idWorker, idPlace, idFlight, idHotel, dateOfSale, price,discount, dayStart, dayEnd)\

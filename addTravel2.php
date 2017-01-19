@@ -1,52 +1,132 @@
 <?php
 	require_once('header.php');
 	require_once('baseConnect.php');
+	echo("<center>");
 	print_r($_POST);
-	Array ( [idClient] => 10 [idWorker] => 6 [idFlight] => 7 [idHotel] => 6 [dayStart] => 2017-01-03 [dayEnd] => 2017-01-28 )
-	if(isset($_POST['idClient']) &&
+	// Array ( [idClient] => 10 [idWorker] => 6 [idFlight] => 7 [idHotel] => 6 [dayStart] => 2017-01-03 [dayEnd] => 2017-01-28 )
+	if(){
+
+	}else if(isset($_POST['idClient']) &&
 			isset($_POST['idWorker']) &&
 			isset($_POST['idFlight']) &&
 			isset($_POST['idHotel']) &&
 			isset($_POST['dayStart']) &&
 			isset($_POST['dayEnd'])		
 	) {
-		$showForm = 0;
-		$begin = new DateTime( $_GET['dayStart'] );
-		$end   = new DateTime( $_GET['dayEnd'] );
-		$idHotel = $_GET['idHotel'];
-		$idFlight = $_GET['idFlight'];
+		if(isset($_POST['approved'])){
+			echo("<h1>Wycieczka zatwierdzona!</h1>");
+		} else {
+			$error = 0;
+			$begin = $_POST['dayStart'];
+			$end   = $_POST['dayEnd'];
+			$idHotel = $_POST['idHotel'];
+			$idFlight = $_POST['idFlight'];
+			$idClient = $_POST['idClient'];
+			$idWorker = $_POST['idFlight'];
 
-		$d = new DateTime($begin."");
-		$endDate = new DateTime($end."");
-
-		while ($d <= $end) {
-			
-			$result = $con->query("select count(*)>(select numberOfPlaces from hotels where id = '$idHotel') as busy
-				from travels where idHotel = '$idHotel' and dayStart <= '$d' and '$d' < dayEnd;");
-			$row = $result->fetch_assoc();
-			if($row['busy'] == "1"){
-				$busyDay = 1;
+	
+			$result = $con->query("select count(*)>=(select numberOfPlaces from flights where id = $idFlight) as busy
+				from travels where idFlight = $idFlight and dayStart = '$begin';");
+			if($result -> num_rows > 0){
+				echo("<h1>Za dużo odlotów w dzień początku wycieczki</h1>");
+				// $error=1;
 			}
-			$startDate->add(new DateInterval('P1D'));
-		}
+	
+			$result = $con->query("select count(*)>=(select numberOfPlaces from flights where id = $flight) as busy
+				from travels where idFlight = $idFlight and dayEnd = '$begin';");
+			if($result -> num_rows > 0){
+				echo("<h1>Za dużo odlotów w dzień końca wycieczki</h1>");
+				// $error=1;
+			}
+	
+			$result = $con->query("select 1 from hotels where block='1' and id='$idHotel';");
+			if($result -> num_rows > 0){
+				echo("<h1>Hotel znajduje się na czarnej liście!</h1>");
+				$error=1;
+			}
+	
+			$result = $con->query("select 1 from flights where block='1' and id='$idFlight';");
+			if($result -> num_rows){
+				echo("<h1>Połączenie lotnicze znajduje się na czarnej liście!</h1>");
+				$error=1;
+			}
+			
+			if($error == 1){
+				echo("<form method='POST' action='addTravel.php' >
+				<input type='hidden' name='idClient' value='$idClient' />
+				<input type='hidden' name='idWorker' value='$idWorker' />
+				<input type='hidden' name='idFlight' value='$idFlight' />
+				<input type='hidden' name='idHotel' value='$idHotel' />
+				<input type='hidden' name='dayStart' value='$begin' />
+				<input type='hidden' name='dayEnd' value='$end' />
+				<input type='submit' value='Wróć do edycji' />");
+			} else {
+				$result = $con->query("select name from workers where id='$idWorker';");
+				$row = $result->fetch_assoc();
+				$nameWorker = $row['name'];
+				
+				
+				$result = $con->query("select name from clients where id='$idClient';");
+				$row = $result->fetch_assoc();
+				$nameClient = $row['name'];
 
-		$result = $con->query("select count(*)>=(select numberOfPlaces from flights where id = 1) as busy
-			from travels where idFlight = 1 and dayStart = '$begin';");
-		
-		$row = $result->fetch_assoc();
-		if($row['busy'] == "1"){
-			$busyStartFlight = 1;
+				$result = $con->query("select destination,price from flights where id='$idFlight';");
+				$row = $result->fetch_assoc();
+				$nameFlight = $row['destination'];
+				$priceFlight = $row['price'];
+
+				$result = $con->query("select address,pricePerNight from hotels where id='$idHotel';");
+				$row = $result->fetch_assoc();
+				$addressHotel = $row['address'];
+				$priceHotel = $row['pricePerNight'];
+
+				$result = $con->query("select count(*) as sum from travels where idClient='$idClient';");
+				$row = $result->fetch_assoc();
+				$countOfClientTravels = $row['sum'];
+				
+				
+				$result = $con->query("select count(*) as sum from visits where idClient='$idClient';");
+				$row = $result->fetch_assoc();
+				$countOfClientVisits = $row['sum'];
+
+
+				$discount = min(10, $countOfClientVisits) + min(2, $countOfClientTravels/4);
+
+				$datetime1 = new DateTime($begin);
+				$datetime2 = new DateTime($end);
+				$interval = $datetime1->diff($datetime2);
+				$time = $interval->days;
+				$totalPrice = 2*$priceFlight + $time*$priceHotel;
+				$totalPriceAfterDiscount = $totalPrice - ($totalPrice*$discount)/100;
+
+// and you might want to convert to integer
+$numberDays = intval($numberDays);
+
+				echo("<form method='POST'>
+				<input type='hidden' name='idClient' value='' />
+				<input type='hidden' name='idWorker' value='' />
+				<input type='hidden' name='idFlight' value='' />
+				<input type='hidden' name='idHotel' value='' />
+				<input type='hidden' name='dayStart' value='' />
+				<input type='hidden' name='dayEnd' value='' />
+				<table id='travelForm'>
+				<tr><td>Imię i nazwisko klienta: </td><td>$nameClient<td></tr>
+				<tr><td>Imię i nazwisko pracownika: </td><td>$nameWorker<td></tr>
+				<tr><td>Cel lotu: </td><td>$nameFlight</td></tr>
+				<tr><td>Cena lotu: </td><td>$priceFlight</td></tr>
+				<tr><td>Adres hotelu: </td><td>$addressHotel</td></tr>
+				<tr><td>Cena hotelu za noc: </td><td>$priceHotel</td></tr>
+				<tr><td>Cena ogółem: </td><td>$totalPrice$</td></tr>
+				<tr><td>Wliczony rabat: </td><td>$discount%</td></tr>
+				<tr><td>Cena z rabatem: </td><td>$totalPriceAfterDiscount$</td></tr>
+				</table>
+				</form>
+				<input type='submit' name='approved' value='akceptuj!' />");
+			}
 		}
-		$result = $con->query("select count(*)>=(select numberOfPlaces from flights where id = 1) as busy
-			from travels where idFlight = 1 and dayEnd = '$begin';");
-		
-		$row = $result->fetch_assoc();
-		if($row['busy'] == "1"){
-			$busyEndFlight = 1;
-		}
-		if($busyDay != 1 && $busyStartFlight != 1 && $busyEndFlight != 1){
-			echo("wszystko ok");
-		}
+	} else {
+		echo("<h1>UZUPEŁNIJ WSZYSTKO!</h1>");
 	}
+	echo("<center>");
 	require_once('footer.php');
 ?>

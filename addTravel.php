@@ -20,6 +20,7 @@
 	$busyDay = 0;
 	$busyStartFlight = 0;
 	$busyEndFlight = 0;
+	print_r($_POST);
 	echo("<center>");
 	if($id < 0){
 		$showForm = 0;
@@ -58,11 +59,12 @@
 		while($row = $result->fetch_assoc()){
 			echo("<option value='".$row['id']."' ");
 			if($_POST['idWorker']==$row['id']){
-				echo(" checked ");
+				echo(" selected ");
 			}
 			echo(">".$row['name']."</option>");
 		}
 		echo("</select>");
+		echo("<br />");
 		echo("<br />");
 		 
 		$result = $con -> query("select id, destination, price from flights;");
@@ -71,28 +73,34 @@
 		while($row = $result->fetch_assoc()){
 			echo("<option value='".$row['id']."' ");
 			if($_POST['idFlight']==$row['id']){
-				echo(" checked ");
+				echo(" selected ");
 			}
 			echo(">".$row['destination']." (".$row['price']."$)</option>");
 		}
 		echo("</select>");
 		echo("<br />");
-		$result = $con -> query("select id, address, pricePerNight from hotels;");
-		echo("Wybierz lot: <select name='idHotel'>");
+		echo("<span style='font-size:0.7em'> (cena za lot w jedną stronę*)</span>");
+		echo("<br />");
+		echo("<br />");
+		$result = $con -> query("select id, address, pricePerNight,stars from hotels;");
+		echo("Wybierz hotel: <select name='idHotel'>");
 		echo("<option value='-1' selected>-----</option>");
 		while($row = $result->fetch_assoc()){
 			echo("<option value='".$row['id']."' ");
 			if($_POST['idHotel']==$row['id']){
-				echo(" checked ");
+				echo(" selected ");
 			}
-			echo(">".$row['address']."  (".$row['pricePerNight']."$)</option>");
+			echo(">".$row['address']." ".$row['stars']."  (".$row['pricePerNight']."$)</option>");
 		}
 		echo("</select>");
 		echo("<br />");
+		echo("<span style='font-size:0.7em'> (cena za jedną noc*)</span>");
+		echo("<br />");
+		echo("<br />");
 		echo("Data wylotu ");
-		echo("<input type='date' name='dayStart' /><br />");
+		echo("<input type='date' name='dayStart' value='".$_POST['dayStart']."'/><br />");
 		echo("Data powrotu ");
-		echo("<input type='date' name='dayEnd' /><br />");
+		echo("<input type='date' name='dayEnd' value='".$_POST['dayEnd']."' /><br />");
 		echo("<br />");
 		echo("<input type='submit' value='dalej' />");
 		echo("</form>");

@@ -27,7 +27,7 @@ for i in cursor:
 
     
 
-for i in range(2000):
+for i in range(200):
     q = "insert into visits(idClient, idPlace, date) values('{}', '{}', '{}-{:02d}-{:02d}');".format(
                 random.choice(idClients),
                 random.choice(idPlaces),

@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -13,7 +16,6 @@
 	<br />
 	<div id="barMenu">
 	<?php
-		session_start();
 		if(isset($_SESSION['login'])){
 			echo(
 				"Masz papcie z loginem <b>".$_SESSION['login']."</b> !".
