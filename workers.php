@@ -1,20 +1,21 @@
 <?php
 	include_once('header.php');
 	include_once('baseConnect.php');
-
 	if($_POST['type']=="add"){
 		$con->query("insert into workers(name, dateOfBirth, address) values(
 			'".$_POST['name']."', '".$_POST['birth']."', '".$_POST['address']."');");
-		$result = $con->query("select id from workers where name='".$_POST['name']."' and dateOfBirth='".$_POST['birth']."' and address='".$_POST['address']."';");
-		$row = $con->fetch_assoc();
-		$id = $row[0];
-		echo($id);
+		$result = $con->query("select id from workers where name='".$_POST['name']."'
+				and dateOfBirth='".$_POST['birth']."' and address='".$_POST['address']."';");
+		$row = $result->fetch_assoc();
+		$id = $row['id'];
 		$con->query("insert into workIn(idWorker, idPlace, agreement, salary, position) values(
 			'".$id."',
-			".$_POST['idPlace'].",
-			".$_POST['agreement'].",
-			".$_POST['salary'].",
-			".$_POST['position'].");");
+			'".$_POST['idPlace']."',
+			'".$_POST['agreement']."',
+			'".$_POST['salary']."',
+			'".$_POST['position']."');");
+		$con->query("insert into bossOf(idWorker, idBoss) values('".$id."','".$_POST['idBoss']."');");
+		echo($con->error);
 	}
 
 	if((isset($_POST['id']) && $_POST['id']>-1) || isset($_POST['add'])){
@@ -57,15 +58,14 @@
 			}
 		echo("</select>");
 		echo("</form>");
-		echo("<input type='hidden' name='type' value='add' />");
 		echo("<form method='POST'>");
+		echo("<input type='hidden' name='type' value='add' />");
 		echo("<h3>Lub utwórz:</h3>");
 		echo("Imie Nazwisko <input type='text' name='name' /><br />");
 		echo("Data urodzenia <input type='date' name='birth' /><br />");
 		echo("Posada <input type='text' name='position' /><br />");
 		$result = $con -> query("select id, name from workers;");
 		echo("Szef: <select name='idBoss'>");
-		echo("<option value='-1' selected>-----</option>");
 		while($row = $result->fetch_assoc()){
 			echo("<option value='".$row['id']."' ");
 			echo(">".$row['name']."</option>");

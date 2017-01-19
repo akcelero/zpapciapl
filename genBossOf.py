@@ -9,7 +9,7 @@ cursor.execute(q)
 q = "create table bossOf(\
 		`idBoss` int(50),\
 		`idWorker` int(10),\
-		PRIMARY KEY(idBoss, idWorker)\
+		PRIMARY KEY(idWorker)\
 		);"
 cursor.execute(q)
 
