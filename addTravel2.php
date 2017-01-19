@@ -2,9 +2,24 @@
 	require_once('header.php');
 	require_once('baseConnect.php');
 	echo("<center>");
-	print_r($_POST);
 	// Array ( [idClient] => 10 [idWorker] => 6 [idFlight] => 7 [idHotel] => 6 [dayStart] => 2017-01-03 [dayEnd] => 2017-01-28 )
-	if(){
+	// Array ( [idClient] => 10 [idWorker] => 8 [idFlight] => 8 [idHotel] => 5 [dayStart] => 2017-01-01 [dayEnd] => 2017-01-02 [approved] => akceptuj! )
+	if(isset($_POST['approved'])){
+		print_r($_POST);
+		$result = $con -> query("insert into travels(idClient, idWorker, idPlace, idFlight, idHotel, dateOfSale, price, discount, dayStart, dayEnd)
+				values(
+					'".$_POST['idClient']."',
+					'".$_POST['idWorker']."',
+					'".$_POST['idPlace']."',
+					'".$_POST['idFlight']."',
+					'".$_POST['idHotel']."',
+					curdate(),
+					'".$_POST['price']."',
+					'".$_POST['discount']."',
+					'".$_POST['dayStart']."',
+					'".$_POST['dayEnd']."');");
+		print_r($result);
+		echo("<h1>Wycieczka zatwierdzona!</h1>");
 
 	}else if(isset($_POST['idClient']) &&
 			isset($_POST['idWorker']) &&
@@ -28,14 +43,14 @@
 			$result = $con->query("select count(*)>=(select numberOfPlaces from flights where id = $idFlight) as busy
 				from travels where idFlight = $idFlight and dayStart = '$begin';");
 			if($result -> num_rows > 0){
-				echo("<h1>Za dużo odlotów w dzień początku wycieczki</h1>");
+				// echo("<h1>Za dużo odlotów w dzień początku wycieczki</h1>");
 				// $error=1;
 			}
 	
 			$result = $con->query("select count(*)>=(select numberOfPlaces from flights where id = $flight) as busy
 				from travels where idFlight = $idFlight and dayEnd = '$begin';");
 			if($result -> num_rows > 0){
-				echo("<h1>Za dużo odlotów w dzień końca wycieczki</h1>");
+				// echo("<h1>Za dużo odlotów w dzień końca wycieczki</h1>");
 				// $error=1;
 			}
 	
@@ -99,29 +114,30 @@
 				$totalPrice = 2*$priceFlight + $time*$priceHotel;
 				$totalPriceAfterDiscount = $totalPrice - ($totalPrice*$discount)/100;
 
-// and you might want to convert to integer
-$numberDays = intval($numberDays);
 
 				echo("<form method='POST'>
-				<input type='hidden' name='idClient' value='' />
-				<input type='hidden' name='idWorker' value='' />
-				<input type='hidden' name='idFlight' value='' />
-				<input type='hidden' name='idHotel' value='' />
-				<input type='hidden' name='dayStart' value='' />
-				<input type='hidden' name='dayEnd' value='' />
+				<input type='hidden' name='idClient' value='$idClient' />
+				<input type='hidden' name='idWorker' value='$idWorker' />
+				<input type='hidden' name='idFlight' value='$idFlight' />
+				<input type='hidden' name='idHotel' value='$idHotel' />
+				<input type='hidden' name='dayStart' value='$begin' />
+				<input type='hidden' name='dayEnd' value='$end' />
+				<input type='hidden' name='price' value='$totalPriceAfterDiscount' />
+				<input type='hidden' name='discount' value='$discount' />
 				<table id='travelForm'>
 				<tr><td>Imię i nazwisko klienta: </td><td>$nameClient<td></tr>
 				<tr><td>Imię i nazwisko pracownika: </td><td>$nameWorker<td></tr>
 				<tr><td>Cel lotu: </td><td>$nameFlight</td></tr>
-				<tr><td>Cena lotu: </td><td>$priceFlight</td></tr>
+				<tr><td>Cena lotu: </td><td>$priceFlight$</td></tr>
 				<tr><td>Adres hotelu: </td><td>$addressHotel</td></tr>
 				<tr><td>Cena hotelu za noc: </td><td>$priceHotel</td></tr>
 				<tr><td>Cena ogółem: </td><td>$totalPrice$</td></tr>
 				<tr><td>Wliczony rabat: </td><td>$discount%</td></tr>
 				<tr><td>Cena z rabatem: </td><td>$totalPriceAfterDiscount$</td></tr>
 				</table>
+				<input type='submit' name='approved' value='akceptuj!' />
 				</form>
-				<input type='submit' name='approved' value='akceptuj!' />");
+				");
 			}
 		}
 	} else {

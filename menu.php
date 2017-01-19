@@ -3,7 +3,7 @@
 ?>	
 	<center class="menu">
 	<div class="wrapper">
-	<a class="menuLink before after sixth" href="clients.php">Aktualizuj bambosze klientów!</a>
+	<a class="menuLink before after sixth" href="clients.php">Aktualizuj dane klientów!</a>
 	</div>
 	<br />
 	<div class="wrapper">
@@ -15,7 +15,7 @@
 	</div>
 	<hr />
 	<div class="wrapper">
-	<a class="menuLink before after sixth" href="workers.php">Zarządzaj władcami bamboszy.</a><br />
+	<a class="menuLink before after sixth" href="workers.php">Zarządzaj władcami podróży.</a><br />
 	</div>
 	<br />
 	<div class="wrapper">
@@ -31,11 +31,11 @@
 	</div>
 	</br>
 	<div class="wrapper">
-	<a class="menuLink before after sixth" href="planes.php">Latający dywan.</a><br />
+	<a class="menuLink before after sixth" href="planes.php">Latające dywany.</a><br />
 	</div>
 	<br />
 	<div class="wrapper">
-	<a class="menuLink before after sixth" href="travels.php">W papciach przez świat!.</a><br />
+	<a class="menuLink before after sixth" href="travels.php">Pokaż podróże w papciach!.</a><br />
 	</div>
 	<hr />
 	<div class="wrapper">
@@ -43,7 +43,7 @@
 	</div>
 	<br />
 	<div class="wrapper">
-	<a class="menuLink before after sixth" href="statSaleByWorker.php">Szprawdz bamboszków!</a><br />
+	<a class="menuLink before after sixth" href="statSaleByWorker.php">Szprawdz klientów!</a><br />
 	</div>
 	</center>
 

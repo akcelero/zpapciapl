@@ -6,7 +6,7 @@
 	if(isset($_POST['add'])){
 		$idClient = $_POST['idClient'];
 		$idPlace = $_POST['idPlace'];
-		$con->query("insert into visits(idClient, idPlace, data) values('$idClient', '$idPlace', CURDATE());");
+		$result = $con->query("insert into visits(idClient, idPlace, date) values('$idClient', '$idPlace', CURDATE());");
 		echo("Dodano wizytę!");
 	}
 

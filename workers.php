@@ -1,5 +1,4 @@
 <?php
-	include_once('header.php');
 	include_once('baseConnect.php');
 	if($_POST['type']=="add"){
 		$con->query("insert into workers(name, dateOfBirth, address) values(
@@ -41,6 +40,7 @@
 		}
 		echo($con->error);
 	}
+	include_once('header.php');
 	
 	$result = $con -> query("select id, name from workers;");
 
@@ -88,7 +88,7 @@
 
 	} else {
 		$result = $con -> query("select * from workers;");
-		$options = "";
+		$options = [];
 		while($row = $result->fetch_assoc()){
 			$id = $row['id'];
 			$name = $row['name'];
@@ -96,7 +96,7 @@
 		}
 
 		$result = $con -> query("select * from places;");
-		$places = "";
+		$places = [];
 		while($row = $result->fetch_assoc()){
 			$id = $row['id'];
 			$adres = $row['address'];

@@ -51,7 +51,7 @@ for i in cursor:
     idHotels.append(i[0])
 
 for i in range(1,300):
-    year = random.randint(2000,2017)
+    year = random.randint(2015,2016)
     msc = random.randint(1,11)
     q = ("insert into travels(idClient, idWorker, idPlace, idFlight, idHotel, dateOfSale, price,discount, dayStart, dayEnd)\
 values('{}', '{}', '{}', '{}', '{}', '{}-{:02d}-{:02}', '{}', '{}', '{}-{:02d}-{:02}', '{}-{:02}-{:02}');".format(\

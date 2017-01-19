@@ -5,7 +5,7 @@
 	$id = $_GET['id'];
 	$year = $_GET['year'];
 	echo("<center>");
-	echo("<h2>Wybierz kapcia do wykresu</h2>");
+	echo("<h2>Sprawdz sprzedarz pracowanika</h2>");
 	echo("<form method='get'>
 			Pracownik <select name='id' onchange='this.form.submit()'>");
 	while($row = $result -> fetch_assoc()){
@@ -16,7 +16,7 @@
 	echo("Rok ");
 	echo("<select name='year' onchange='this.form.submit()'>");
 	echo("<option value='0' selected>-----</option>");
-	for($i=2000;$i<2017;$i++){
+	for($i=2015;$i<2017;$i++){
 		echo("<option value='$i'");
 		if($_GET['year'] == $i){
 			echo("selected");
