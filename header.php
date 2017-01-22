@@ -1,5 +1,8 @@
 <?php
 	session_start();
+	if(!isset($_SESSION['level']) && basename($_SERVER['REQUEST_URI']) != 'index.php'){
+		die();
+	}
 ?>
 <html>
 <head>

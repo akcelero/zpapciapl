@@ -4,19 +4,14 @@
 	if(isset($_POST['login']) && isset($_POST['password'])){
 		$login = $_POST['login'];
 		$password = $_POST['password'];
-		$result = $con -> query("select login, level from users where login = '$login' and password='$password';");
-		if($result -> num_rows == 0){
-			die("Error ".$result->error);
+		$result = login($login, $password);
+		if(count($result) > 0){
+			$_SESSION['level'] = $result['level'];
+			$_SESSION['login'] = $result['login'];
 		}
-		$row = $result->fetch_assoc();
-		$_SESSION['level'] = $row['level'];
-		$_SESSION['login'] = $row['login'];
 	}
 	if(isset($_SESSION['level'])){
-		// przekierowanie na adres loklany 
 		header("Location: menu.php"); 
-		// przekierowanie na adres zdalny 
-		// header("wLocation: http://www.domena.pl/");
 	}
 	require_once("header.php");
 ?>
